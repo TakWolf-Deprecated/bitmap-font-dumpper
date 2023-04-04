@@ -46,7 +46,7 @@ def dump_font(output_name, font_file_path, font_size, canvas_height, offset_xy, 
         c = chr(code_point)
 
         if need_alphabet is not None:
-            if c not in alphabet:
+            if c not in need_alphabet:
                 continue
 
         uni_hex_name = f'{code_point:04X}'
