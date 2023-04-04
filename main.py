@@ -7,18 +7,19 @@ from fontTools.ttLib import TTFont
 
 import configs
 from configs import path_define
-from utils import fs_util, glyph_util
+from utils import fs_util, glyph_util, gb2312_util
 
 logger = logging.getLogger('main')
 
 
-def dump_font(output_name, font_file_path, font_size, canvas_height, offset_xy=(0, 0)):
+def dump_font(output_name, font_file_path, font_size, canvas_height, offset_xy, need_alphabet=None):
     """
     :param output_name: 输出文件夹名称
     :param font_file_path: 字体文件路径
     :param font_size: 字体尺寸
     :param canvas_height: 画布高度
     :param offset_xy: 偏移坐标
+    :param need_alphabet: 需要的字母表字迹
     """
     dump_dir = os.path.join(path_define.outputs_dir, output_name)
     fs_util.make_dirs_if_not_exists(dump_dir)
@@ -43,6 +44,11 @@ def dump_font(output_name, font_file_path, font_size, canvas_height, offset_xy=(
 
     for code_point, glyph_name in cmap.items():
         c = chr(code_point)
+
+        if need_alphabet is not None:
+            if c not in alphabet:
+                continue
+
         uni_hex_name = f'{code_point:04X}'
         unicode_block = configs.unidata_db.get_block_by_code_point(code_point)
         block_dir_name = f'{unicode_block.begin:04X}-{unicode_block.end:04X} {unicode_block.name}'
@@ -89,6 +95,7 @@ def main():
         font_size=12,
         canvas_height=12,
         offset_xy=(0, 0),
+        need_alphabet=gb2312_util.get_alphabet(),
     )
 
 
