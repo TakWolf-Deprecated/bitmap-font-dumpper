@@ -1,3 +1,5 @@
-fonttools==4.39.3
-Pillow==9.5.0
+fonttools==4.41.1
+unidata-blocks==0.0.5
+character-encoding-utils==0.0.5
+Pillow==10.0.0
 pypng==0.20220715.0
